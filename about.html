@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>About me </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="caden" />
+<meta property="og:site_name" content="caden's website" />
+<meta property="og:image" content="https://kaylynn.gay/favicon.png" />
+<meta property="og:description" content="i'm a cool dude i think atleast"/>
+<link rel="stylesheet" href="css/css.css" />
+<link rel="shortcut icon" type="image/png" href="/favicon.png" />
+</head>
+<nav class="navbar">
+<h1 id="logo-button" class="navbar-logo">caden.lol</h1>
+<a class="navbar-content" href="/index.html">home</a>
+<a class="navbar-content" href="/about.html">about me</a>
+<!---<a class="navbar-content" href="/blog">blog</a> --->
+<div class="navbar-rest"></div>
+</nav>
+<body>
+<h1>about me</h1>
+<p>i'm caden (he/him)</p>
+<p>i'm a developer from the US, and i am a very unoriginal developer, to the point where i have to ask for ideas.</p>
+<p>other than that, i talk to the friends i have, play games, listen to music (mostly rap / hyperpop or whatever the fuck i find), petting
+and feeding my cats (they are fat kittens somehow), and arguing about random shit on the internet</p>
+<h2>contact</h2>
+<ul>
+<li>you can find me on discord <a href="https://discord.com/users/941864953965592636">here</a></li>
+</ul>
+<h2>interests</h2>
+<ul>
+<li>i love cats, not your cats, my cats.. (i have 3)</li>
+<li>gamin, i like val, mc, roblox, anything that my friends play tbh</li>
+<li>i like music, it's like my favorite thing</li>
+</ul>
+<script type="text/javascript" src="/tinycolor.js" async></script>
+<script type="text/javascript">
+    function gay() {
+      let sheet = document.styleSheets[0];
+      let rules = Array.from(sheet.cssRules);
+      let root_rule = rules.find((rule) => rule.cssText.startsWith(":root"));
+
+      // I've got no clue if there's a better way to do this.
+      // It doesn't seem like there's an iteration protocol for this kind of element?
+      let ruleNames = [];
+      for (let i of Array(root_rule.style.length).keys()) {
+        ruleNames.push(root_rule.style[i]);
+      }
+
+      const cycle = function () {
+        for (let ruleName of ruleNames) {
+          let ruleValue = window
+            .getComputedStyle(document.documentElement)
+            .getPropertyValue(ruleName);
+
+          // This probably isn't a color, so we don't want to touch it.
+          if (!ruleValue.trim().startsWith("#")) {
+            continue;
+          }
+
+          let color = tinycolor(ruleValue.trim()).spin(1).toHexString();
+          document.documentElement.style.setProperty(ruleName, color);
+        }
+      };
+
+      window.setInterval(cycle, 33);
+    }
+
+    function arrayIsEqual(first, second) {
+      return (
+        Array.isArray(first) &&
+        Array.isArray(second) &&
+        first.length === second.length &&
+        first.every((item, index) => item === second[index])
+      );
+    }
+
+    let konamiCode = [
+      "ArrowUp",
+      "ArrowUp",
+      "ArrowDown",
+      "ArrowDown",
+      "ArrowLeft",
+      "ArrowRight",
+      "ArrowLeft",
+      "ArrowRight",
+      "b",
+      "a",
+    ];
+
+    let lastKeypress = 0;
+    let keys = [];
+    let ooerized = false;
+
+    window.addEventListener("keydown", (event) => {
+      if (ooerized || event.isComposing || event.keyCode === 229) {
+        return;
+      }
+
+      let now = (Date.now() / 1000) | 0;
+      if (now - lastKeypress > 5) {
+        keys = [];
+      }
+
+      lastKeypress = now;
+      keys.push(event.key);
+
+      // Comparing arrays with `==` doesn't work as arrays are actually objects.
+      // Not a fun joke.
+      if (!arrayIsEqual(keys.slice(-10), konamiCode)) {
+        return;
+      }
+
+      document.head.insertAdjacentHTML(
+        "beforeend",
+        '<link rel="stylesheet" href="ooer.css" />'
+      );
+
+      ooerized = true;
+      delete keys;
+      delete lastKeypress;
+    });
+
+    // Technically using a closure here isn't necessary but I don't want the parameter passing to hurt me later.
+    document
+      .getElementById("logo-button")
+      .addEventListener("click", () => gay());
+  </script>
+</html>
